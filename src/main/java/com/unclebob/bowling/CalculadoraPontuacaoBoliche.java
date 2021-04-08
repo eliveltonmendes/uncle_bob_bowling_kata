@@ -1,8 +1,6 @@
 package com.unclebob.bowling;
 
 public class CalculadoraPontuacaoBoliche {
-    boolean strikeSpareUltimaPosicao = false;
-
     public int pontuacaoTotal(int[] jogadas) {
         int pontuacaoTotal = 0;
         int cursor = 0;
