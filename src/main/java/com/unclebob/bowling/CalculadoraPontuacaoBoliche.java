@@ -1,48 +1,30 @@
 package com.unclebob.bowling;
 
 public class CalculadoraPontuacaoBoliche {
-    int maximoJogadas = 10;
     boolean strikeSpareUltimaPosicao = false;
 
     public int pontuacaoTotal(int[] jogadas) {
-        int pontuacaoTotal = retornaSomaPontuacaoSimples(jogadas);
+        int pontuacaoTotal = 0;
         int cursor = 0;
 
-        for (int frame = 0; frame < maximoJogadas; frame++) {
+        for (int frame = 0; frame < 10; frame++) {
             if (isStrike(jogadas, cursor)) {
-                pontuacaoTotal += retornaBonusStrike(jogadas, cursor);
+                pontuacaoTotal += 10 + retornaBonusStrike(jogadas, cursor);
                 cursor++;
             } else if (isSpare(jogadas, cursor)) {
-                pontuacaoTotal += retornaBonusSpare(jogadas, cursor);
+                pontuacaoTotal += 10 + retornaBonusSpare(jogadas, cursor);
                 cursor += 2;
             } else {
+                pontuacaoTotal += jogadas[cursor] + jogadas[cursor + 1];
                 cursor += 2;
             }
         }
 
-        int score = (pontuacaoTotal < 300) ? pontuacaoTotal : 300;
-        return score;
-    }
-
-    private int retornaSomaPontuacaoSimples(int[] jogadas){
-        int score = 0;
-
-        for(int cursor = 0; cursor < jogadas.length; cursor++) {
-            score += jogadas[cursor];
-        }
-
-        return score;
+        return pontuacaoTotal;
     }
 
     private boolean isSpare(int[] jogadas, int posicao) {
-        boolean isSpare = false;
-
-        if (posicao + 2 < (jogadas.length - 1)) {
-            int somaPinos = jogadas[posicao] + jogadas[posicao + 1];
-            isSpare = (somaPinos == 10);
-        }
-
-        return isSpare;
+        return (jogadas[posicao] + jogadas[posicao + 1]) == 10;
     }
 
     private boolean isStrike(int[] jogadas, int posicao) {
